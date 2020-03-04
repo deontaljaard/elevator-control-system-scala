@@ -61,4 +61,15 @@ class ElevatorControllerTest extends AnyFunSuite {
     ecs.step()
     assert(ecs.totalPendingRequests == 0) // elevator id 0 reached floor 8
   }
+
+  test(s"An ECS should be able to handle pickup requests that cannot be served straight away") {
+    val ecs = new ElevatorController(2)
+    ecs.update(0, 4, 7)
+    ecs.update(1, 1, 3)
+    ecs.pickup(3, Up)
+    ecs.pickup(4, Up)
+    ecs.pickup(1, Down)
+    assert(ecs.totalPendingRequests == 5)
+    assert(ecs.pickupQ.size == 1)
+  }
 }

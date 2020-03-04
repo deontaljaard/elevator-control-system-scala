@@ -7,7 +7,7 @@ import scala.collection.mutable
 
 class ElevatorController(val elevatorCount: Int) extends ElevatorControlSystem {
 
-  private lazy val pickupQ: mutable.Queue[(Int, Direction)] = mutable.Queue.empty[(Int, Direction)]
+  lazy val pickupQ: mutable.Queue[(Int, Direction)] = mutable.Queue.empty[(Int, Direction)]
 
   val elevators: List[Elevator] = {
     if (elevatorCount <= MAX_ELEVATORS) Range(0, elevatorCount).map(new Elevator(_)).toList
@@ -66,7 +66,7 @@ class ElevatorController(val elevatorCount: Int) extends ElevatorControlSystem {
   }
 
   // not very efficient, but can deal with it if for small amounts of elevators
-  def totalPendingRequests: Int = elevators.map(_.pendingRequests()).sum
+  def totalPendingRequests: Int = elevators.map(_.pendingRequests()).sum + pickupQ.size
 
   override def toString: String = s"Controlling $elevatorCount elevators."
 }
