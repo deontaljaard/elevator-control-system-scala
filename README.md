@@ -29,11 +29,10 @@ Here follows some thoughts on implementation details, like data structures used,
 ## Elevator
 See [Elevator.scala](./src/main/scala/system/elevator/Elevator.scala)
 
-The elevator implementation makes use of a TreeSet to keep track of pickup requests. It uses two TreeSets for upward and
-downward floors. A set was used because it automatically discards duplicates. A TreeSet was used because of natural 
-ordering on numeric types. As a standalone entity, the elevator is able to traverse the upward requests, and when there 
-no more upward pickup floor requests, adjust itself to a new goal floor at a lower level, if a pickup request for 
-downward pickup floor requests exist.
+The elevator implementation makes use of a TreeSet to keep track of pickup requests. It uses two TreeSets for floors above (up) and
+below (down) the current floor. A set was used because it automatically discards duplicates. A TreeSet was used because of natural 
+ordering on numbers. If the elevator is going up, it queries the next lowest floor in the up TreeSet. If the elevator is going down
+it queries the next highest floor in the down TreeSet.
 
 
 ## Elevator Controller (Elevator Control System - ECS)
