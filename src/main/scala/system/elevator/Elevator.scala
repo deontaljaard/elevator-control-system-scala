@@ -36,13 +36,13 @@ class Elevator(val id: Int) {
   }
 
   /**
-   * Adds a new pickup floor to the elevator. 
+   * Adds a new pickup floor to the elevator. Ignores pickup requests on the same floor.
    *
    * @param pickupFloorNumber a floor the elevator should stop at.
    */
   def addPickup(pickupFloorNumber: Int): Unit = {
     if (pickupFloorNumber > floorNumber) upFloors += pickupFloorNumber
-    else downFloors += pickupFloorNumber
+    else if (floorNumber > pickupFloorNumber) downFloors += pickupFloorNumber
   }
 
   /**
@@ -69,7 +69,7 @@ class Elevator(val id: Int) {
   private def handleMoveForDirection(currentDirectionRequests: mutable.TreeSet[Int],
                                      oppositeDirectionRequests: mutable.TreeSet[Int],
                                      currentDirection: Direction): Unit = {
-    if (currentDirectionRequests.nonEmpty) { // can we remove this defensive check?
+    if (currentDirectionRequests.nonEmpty) {
       floorNumber += currentDirection.value
       if (floorNumber == currentDirectionRequests.head)
         currentDirectionRequests -= currentDirectionRequests.head
@@ -80,6 +80,8 @@ class Elevator(val id: Int) {
         else println(idleMessage)
       }
     }
+    else if (oppositeDirectionRequests.nonEmpty) goalFloorNumber = oppositeDirectionRequests.head
+    else println(idleMessage)
   }
 
   override def toString: String = s"Elevator ID: $id, floor number: $floorNumber, goal floor: $goalFloorNumber"
