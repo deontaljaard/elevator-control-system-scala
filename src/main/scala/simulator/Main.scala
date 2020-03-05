@@ -1,6 +1,6 @@
 package simulator
 
-import system.elevator.ElevatorController
+import system.elevator.{ElevatorController, ElevatorStatus}
 import system.enums.{Down, Up}
 
 object Main {
@@ -13,7 +13,7 @@ object Main {
     val ecs = new ElevatorController(elevatorCount)
 
     // update the states (randomly)
-    Range(0, elevatorCount).foreach(idx => ecs.update(idx, r.nextInt(maxFloors) + 1, r.nextInt(maxFloors) + 1))
+    Range(0, elevatorCount).foreach(idx => ecs.update(ElevatorStatus(idx, r.nextInt(maxFloors) + 1, r.nextInt(maxFloors) + 1)))
     val startState = ecs.status()
 
     // issue pickup requests

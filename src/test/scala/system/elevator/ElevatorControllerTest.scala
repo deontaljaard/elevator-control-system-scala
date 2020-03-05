@@ -20,24 +20,24 @@ class ElevatorControllerTest extends AnyFunSuite {
 
   test(s"An ECS should be able to receive update requests") {
     val ecs = new ElevatorController(1)
-    ecs.update(0, 3, 8)
-    ecs.elevators.head.status == (0, 3, 8)
-    assert(ecs.elevators.head.status == (0, 3, 8))
+    ecs.update(ElevatorStatus(0, 3, 8))
+    ecs.elevators.head.status == ElevatorStatus(0, 3, 8)
+    assert(ecs.elevators.head.status == ElevatorStatus(0, 3, 8))
   }
 
   test(s"An ECS should be able to query the status of the elevators") {
     val ecs = new ElevatorController(3)
-    ecs.update(0, 3, 8)
-    ecs.update(1, 6, 2)
-    ecs.update(2, 1, 19)
-    val expectedStatus = List((0, 3, 8), (1, 6, 2), (2, 1, 19))
+    ecs.update(ElevatorStatus(0, 3, 8))
+    ecs.update(ElevatorStatus(1, 6, 2))
+    ecs.update(ElevatorStatus(2, 1, 19))
+    val expectedStatus = List(ElevatorStatus(0, 3, 8), ElevatorStatus(1, 6, 2), ElevatorStatus(2, 1, 19))
     assert(ecs.status() === expectedStatus)
   }
 
   test(s"An ECS should be able to receive pickup requests") {
     val ecs = new ElevatorController(2)
-    ecs.update(0, 3, 8)
-    ecs.update(1, 6, 2)
+    ecs.update(ElevatorStatus(0, 3, 8))
+    ecs.update(ElevatorStatus(1, 6, 2))
     assert(ecs.totalPendingRequests == 2)
     ecs.pickup(3, Down)
     ecs.pickup(4, Up)
@@ -46,8 +46,8 @@ class ElevatorControllerTest extends AnyFunSuite {
 
   test(s"An ECS should be able to step") {
     val ecs = new ElevatorController(2)
-    ecs.update(0, 3, 8)
-    ecs.update(1, 6, 2)
+    ecs.update(ElevatorStatus(0, 3, 8))
+    ecs.update(ElevatorStatus(1, 6, 2))
     ecs.pickup(3, Down)
     ecs.pickup(4, Up)
     assert(ecs.totalPendingRequests == 4)
@@ -64,8 +64,8 @@ class ElevatorControllerTest extends AnyFunSuite {
 
   test(s"An ECS should be able to handle pickup requests that cannot be served straight away") {
     val ecs = new ElevatorController(2)
-    ecs.update(0, 4, 7)
-    ecs.update(1, 1, 3)
+    ecs.update(ElevatorStatus(0, 4, 7))
+    ecs.update(ElevatorStatus(1, 1, 3))
     ecs.pickup(2, Up)
     ecs.pickup(5, Up)
     ecs.pickup(1, Down)

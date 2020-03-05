@@ -16,7 +16,7 @@ class Elevator(val id: Int) {
 
   def direction: Direction = if (goalFloorNumber > floorNumber) Up else Down
 
-  def status: (Int, Int, Int) = (id, floorNumber, goalFloorNumber)
+  def status: ElevatorStatus = ElevatorStatus(id, floorNumber, goalFloorNumber)
 
   def pendingRequests(): Int = upFloors.size + downFloors.size
 

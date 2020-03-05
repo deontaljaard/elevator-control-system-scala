@@ -17,22 +17,20 @@ class ElevatorController(val elevatorCount: Int) extends ElevatorControlSystem {
   val idleElevator: Elevator => Boolean = _.pendingRequests() == 0
 
   /**
-   * Return a sequence of Tuple3[Int, Int, Int] that represent the state of each elevator in the system.
-   * Each Tuple3[Int, Int, Int] represents the elevator id, (current) floor number, goal floor number
+   * Return a sequence of ElevatorStatus that represent the state of each elevator in the system.
+   * Each ElevatorStatus represents the elevator id, (current) floor number, goal floor number
    *
-   * @return a sequence of Tuple3[Int, Int, Int]
+   * @return a sequence of ElevatorStatus
    */
-  override def status(): Seq[(Int, Int, Int)] = elevators.map(_.status)
+  override def status(): Seq[ElevatorStatus] = elevators.map(_.status)
 
   /**
    * Update elevator with new values (new state)
    *
-   * @param elevatorId   the id of the elevator
-   * @param floorNum     new current floor
-   * @param goalFloorNum new goal floor
+   * @param elevatorStatus  the new elevator status
    */
-  override def update(elevatorId: Int, floorNum: Int, goalFloorNum: Int): Unit =
-    elevators(elevatorId).update(floorNum, goalFloorNum)
+  override def update(elevatorStatus: ElevatorStatus): Unit =
+    elevators(elevatorStatus.id).update(elevatorStatus.floorNumber, elevatorStatus.goalFloorNumber)
 
   /**
    * The control system schedules a pickup floor request in the requested direction. The function searches for
