@@ -47,7 +47,7 @@ class ElevatorController(val elevatorCount: Int) extends ElevatorControlSystem {
   override def pickup(pickupFloor: Int, direction: Direction): Unit = {
     // collect elevator candidates, sorted by smallest diff
     val elevatorsInDirection = elevators.collect {
-      case elevator: Elevator if elevator.direction == direction  =>
+      case elevator: Elevator if elevator.direction == direction =>
         val diff = direction.value * (pickupFloor - elevator.floorNumber)
         (diff, elevator.id)
     }.sorted
