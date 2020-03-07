@@ -84,4 +84,3 @@ As the amount of elevators and floors grow, a more efficient method can potentia
 * Check for instances were all the elevators are travelling in a specific direction to ensure 'availability' for the 
 opposite direction.
 * Use value classes for numeric types in the elevator status case class.
-* Use concurrent collections to make the solution thread-safe and more robust for use in a web service.
