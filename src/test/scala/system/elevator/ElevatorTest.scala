@@ -15,17 +15,6 @@ class ElevatorTest extends AnyFunSuite {
     assert(elevator.downFloors.isEmpty)
   }
 
-  test("asdf") {
-    val e = new Elevator(0)
-    e.update(7, 8)
-    e.downFloors += 8
-    e.downFloors += 7
-    e.downFloors += 5
-    assert(e.direction == Up)
-    e.move()
-    println(e.status)
-  }
-
   test("An elevator should derive its direction") {
     val elevator = new Elevator(0)
     elevator.update(0, 2)

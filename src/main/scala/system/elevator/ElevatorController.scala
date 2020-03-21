@@ -61,7 +61,7 @@ class ElevatorController(val elevatorCount: Int) extends ElevatorControlSystem {
    * queued, and if so, will try find an idle elevator on which to add the pickup request.
    */
   override def step(): Unit = {
-    elevators.filterNot(idleElevator).foreach(elevator => elevator.move())
+    elevators.filterNot(idleElevator).foreach(_.move())
 
     if (pickupQ.nonEmpty) {
       val (pickupFloor, direction) = pickupQ.head
